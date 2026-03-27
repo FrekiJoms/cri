@@ -119,6 +119,20 @@
         width: 100%;
         margin-top: 15px;
         border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      thead,
+      tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      tbody {
+        display: block;
+        max-height: 320px;
+        overflow-y: auto;
       }
 
       th,
@@ -212,6 +226,7 @@
             </tr>
           </thead>
           <tbody id="pricingTableBody"></tbody>
+          <!-- diri mo load ag mga gipang save nga products -->
         </table>
       </div>
     </div>
@@ -328,7 +343,7 @@
             new_price: Number(price),
             timestamp: timestamp,
           });
-          showMessage("Product price updated successfully.", "success");
+          showMessage("Mana, nabag-o na.", "success");
         } else {
           products.push({
             id: productId,
@@ -341,7 +356,7 @@
               },
             ],
           });
-          showMessage("Product base price saved successfully.", "success");
+          showMessage("Mana, nabutang na.", "success");
         }
 
         saveProducts(products);
