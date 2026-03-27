@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script src="https://unpkg.com"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
+    <title>User Dashboard</title>
 
     <style>
       * {
@@ -26,19 +27,15 @@
         background: #2f3542;
         color: white;
         padding: 20px;
-        position: fixed;
-        height: 100%;
       }
 
       .sidebar h2 {
         text-align: center;
         margin-bottom: 30px;
-        font-size: 22px;
       }
 
       .sidebar a {
-        display: flex;
-        align-items: center;
+        display: block;
         padding: 12px;
         margin-bottom: 8px;
         color: white;
@@ -51,41 +48,20 @@
         background: #57606f;
       }
 
-      .sidebar a .icon {
-        margin-right: 10px;
-      }
-
       /* Main Content */
 
       .main {
         flex: 1;
-        margin-left: 230px; /* Offset by sidebar width */
         padding: 30px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        margin-top: 20px;
-        min-height: 100vh;
       }
 
       .header {
         margin-bottom: 25px;
       }
 
-      .header h1 {
-        font-size: 32px;
-        font-weight: bold;
-        color: #333;
-      }
-
-      .header p {
-        font-size: 18px;
-        color: #777;
-      }
-
       .cards {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
       }
 
@@ -94,51 +70,16 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s, box-shadow 0.3s;
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
       }
 
       .card h3 {
         margin-bottom: 10px;
-        font-size: 20px;
-        color: #333;
       }
 
       .card a {
         text-decoration: none;
         color: #3742fa;
         font-size: 14px;
-      }
-
-      /* Mobile Responsiveness */
-
-      @media (max-width: 768px) {
-        .sidebar {
-          width: 200px;
-        }
-
-        .main {
-          margin-left: 200px;
-        }
-      }
-
-      @media (max-width: 600px) {
-        .sidebar {
-          width: 100%;
-          position: relative;
-        }
-
-        .main {
-          margin-left: 0;
-        }
-
-        .sidebar a {
-          padding: 10px;
-        }
       }
     </style>
   </head>
@@ -149,21 +90,11 @@
     <div class="sidebar">
       <h2>User</h2>
 
-      <a href="{{ url_for('admindashboard') }}">
-        <span class="icon">🏠</span> Dashboard
-      </a>
-      <a href="#">
-        <span class="icon">👥</span> User Management
-      </a>
-      <a href="#">
-        <span class="icon">📊</span> Reports
-      </a>
-      <a href="#">
-        <span class="icon">⚙️</span> Settings
-      </a>
-      <a href="{{ url_for('login') }}">
-        <span class="icon">🔑</span> Logout
-      </a>
+      <a href="{{ url_for('admindashboard') }}">Dashboard</a>
+      <a href="pricingdashboard.html"class="btn">Dasboard</a>
+      <a href="#">Discount Management Functionalities</a>
+      <a href="#">Settings</a>
+      <a href="{{ url_for('login') }}">Logout</a>
     </div>
 
     <!-- Main Content -->
@@ -176,19 +107,27 @@
 
       <div class="cards">
         <div class="card">
-          <h3>Total Users</h3>
-          <p>500</p>
-          <a href="#">View Details</a>
+          <h3>Users</h3>
+          <p>Manage system users.</p>
+          <a href="#">View Users</a>
         </div>
+
         <div class="card">
-          <h3>Pending Tasks</h3>
-          <p>12</p>
-          <a href="#">View Details</a>
+          <h3>Products</h3>
+          <p>Manage products and pricing.</p>
+          <a href="#">View Products</a>
         </div>
+
         <div class="card">
-          <h3>Active Subscriptions</h3>
-          <p>320</p>
-          <a href="#">View Details</a>
+          <h3>Inventory</h3>
+          <p>Monitor stock levels.</p>
+          <a href="#">Open Inventory</a>
+        </div>
+
+        <div class="card">
+          <h3>Reports</h3>
+          <p>View sales and activity reports.</p>
+          <a href="#">Generate Reports</a>
         </div>
       </div>
     </div>

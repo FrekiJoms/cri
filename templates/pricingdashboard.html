@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Pricing</title>
+</head>
+<body>
+    <h1>Product Pricing Manager</h1>
+
+    <h2>Add Product</h2>
+    <form action="/add" method="POST">
+        <input type="text" name="name" placeholder="Product Name" required>
+        <input type="number" step="0.01" name="price" placeholder="Price" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <h2>Update Price</h2>
+    <form action="/update" method="POST">
+        <input type="text" name="name" placeholder="Product Name" required>
+        <input type="number" step="0.01" name="price" placeholder="New Price" required>
+        <button type="submit">Update</button>
+    </form>
+
+    <h2>Products</h2>
+    <ul>
+        {% for name, history in products.items() %}
+            <li>
+                <strong>{{ name }}</strong> -
+                Latest Price: {{ history[-1].price }}
+                <a href="/history/{{ name }}">View History</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
