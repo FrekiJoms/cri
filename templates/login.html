@@ -18,12 +18,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
-        /* Switzerland eco background */
-        background: linear-gradient(
-            rgba(0, 50, 0, 0.4),
-            rgba(0, 80, 0, 0.4)
-          ),
+        background: linear-gradient(rgba(0, 50, 0, 0.4), rgba(0, 80, 0, 0.4)),
           url("https://images.unsplash.com/photo-1501785888041-af3ef285b470")
             no-repeat center/cover;
       }
@@ -49,6 +44,7 @@
       .message {
         text-align: center;
         color: #ffcccc;
+        min-height: 24px;
         margin-bottom: 15px;
       }
 
@@ -96,11 +92,11 @@
 
   <body>
     <div class="login-container">
-      <h1>🌿 Welcome</h1>
+      <h1>Welcome</h1>
 
       <div class="message">{{ message }}</div>
 
-      <form action="/login" method="post">
+      <form action="{{ url_for('login') }}" method="post">
         <div class="input-group">
           <input type="text" name="username" placeholder="Username" required />
         </div>

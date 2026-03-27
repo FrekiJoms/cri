@@ -1,34 +1,250 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Product Pricing</title>
-</head>
-<body>
-    <h1>Product Pricing Manager</h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing Management</title>
 
-    <h2>Add Product</h2>
-    <form action="/add" method="POST">
-        <input type="text" name="name" placeholder="Product Name" required>
-        <input type="number" step="0.01" name="price" placeholder="Price" required>
-        <button type="submit">Add</button>
-    </form>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
 
-    <h2>Update Price</h2>
-    <form action="/update" method="POST">
-        <input type="text" name="name" placeholder="Product Name" required>
-        <input type="number" step="0.01" name="price" placeholder="New Price" required>
-        <button type="submit">Update</button>
-    </form>
+      body {
+        display: flex;
+        min-height: 100vh;
+        background: #f4f6f9;
+      }
 
-    <h2>Products</h2>
-    <ul>
-        {% for name, history in products.items() %}
-            <li>
-                <strong>{{ name }}</strong> -
-                Latest Price: {{ history[-1].price }}
-                <a href="/history/{{ name }}">View History</a>
-            </li>
+      .sidebar {
+        width: 230px;
+        background: #2f3542;
+        color: white;
+        padding: 20px;
+      }
+
+      .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .sidebar a {
+        display: block;
+        padding: 12px;
+        margin-bottom: 8px;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background 0.2s;
+      }
+
+      .sidebar a:hover,
+      .sidebar a.active {
+        background: #57606f;
+      }
+
+      .main {
+        flex: 1;
+        padding: 30px;
+      }
+
+      .header {
+        margin-bottom: 25px;
+      }
+
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .message-list {
+        list-style: none;
+        margin-bottom: 20px;
+      }
+
+      .message-list li {
+        padding: 12px 14px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      .message-list .success {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .message-list .error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .field label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #555;
+      }
+
+      .field input,
+      .field select,
+      .field button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #cbd5e1;
+      }
+
+      .field button {
+        border: none;
+        background: #2f3542;
+        color: white;
+        cursor: pointer;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 15px;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f0;
+        vertical-align: top;
+      }
+
+      .history-list {
+        list-style: none;
+      }
+
+      .history-list li {
+        margin-bottom: 8px;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <h2>User</h2>
+
+      <a href="{{ url_for('userdashboard') }}">Dashboard</a>
+      <a
+        href="{{ url_for('userdashboard_section', section='pricing') }}"
+        class="active"
+        >Pricing Management</a
+      >
+      <a href="{{ url_for('userdashboard_section', section='settings') }}"
+        >Settings</a
+      >
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <div class="main">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <ul class="message-list">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
         {% endfor %}
-    </ul>
-</body>
+      </ul>
+      {% endif %} {% endwith %}
+
+      <div class="header">
+        <h1>Pricing Management</h1>
+        <p>Welcome, {{ username }}</p>
+      </div>
+
+      <div class="card">
+        <h3>Update Product Price</h3>
+        <p>Only admin users can update prices. Every change is recorded.</p>
+
+        <form action="{{ url_for('update_pricing') }}" method="post">
+          <div class="form-row">
+            <div class="field">
+              <label for="product_id">Product</label>
+              <select name="product_id" id="product_id" required>
+                {% for product in products %}
+                <option value="{{ product.id }}">
+                  {{ product.name }} - ID {{ product.id }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="price">New Price</label>
+              <input
+                type="number"
+                name="price"
+                id="price"
+                step="0.01"
+                min="0.01"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label>&nbsp;</label>
+              <button type="submit">Update Price</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Product List and Base Price</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Product Name</th>
+              <th>Base Price</th>
+              <th>Price History</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <td>{{ product.id }}</td>
+              <td>{{ product.name }}</td>
+              <td>${{ '%.2f'|format(product.base_price) }}</td>
+              <td>
+                <ul class="history-list">
+                  {% for entry in product.price_history|reverse %}
+                  <li>
+                    {% if entry.old_price is none %}Initial: ${{
+                    '%.2f'|format(entry.new_price) }}{% else %}${{
+                    '%.2f'|format(entry.old_price) }} to ${{
+                    '%.2f'|format(entry.new_price) }}{% endif %}
+                    <br />
+                    <small>
+                      {{ entry.timestamp }} by {{ entry.updated_by }}
+                    </small>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>

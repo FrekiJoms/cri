@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Dashboard</title>
+    <title>Settings</title>
 
     <style>
       * {
@@ -67,16 +67,6 @@
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
-
-      .card h3 {
-        margin-bottom: 10px;
-      }
-
-      .card a {
-        text-decoration: none;
-        color: #3742fa;
-        font-size: 14px;
-      }
     </style>
   </head>
 
@@ -84,11 +74,13 @@
     <div class="sidebar">
       <h2>User</h2>
 
-      <a href="{{ url_for('userdashboard') }}" class="active">Dashboard</a>
+      <a href="{{ url_for('userdashboard') }}">Dashboard</a>
       <a href="{{ url_for('userdashboard_section', section='pricing') }}"
         >Pricing Management</a
       >
-      <a href="{{ url_for('userdashboard_section', section='settings') }}"
+      <a
+        href="{{ url_for('userdashboard_section', section='settings') }}"
+        class="active"
         >Settings</a
       >
       <a href="{{ url_for('logout') }}">Logout</a>
@@ -96,25 +88,19 @@
 
     <div class="main">
       <div class="header">
-        <h1>User Dashboard</h1>
+        <h1>Settings</h1>
         <p>Welcome, {{ username }}</p>
       </div>
 
       <div class="cards">
         <div class="card">
-          <h3>Pricing Management</h3>
-          <p>Open pricing management from the sidebar without losing the user layout.</p>
-          <a href="{{ url_for('userdashboard_section', section='pricing') }}"
-            >Open Pricing Management</a
-          >
+          <h3>Account</h3>
+          <p>User: {{ username }}</p>
         </div>
 
         <div class="card">
-          <h3>Settings</h3>
-          <p>Open settings in a separate tab page with the same sidebar.</p>
-          <a href="{{ url_for('userdashboard_section', section='settings') }}"
-            >Open Settings</a
-          >
+          <h3>Role</h3>
+          <p>{{ role|title }}</p>
         </div>
       </div>
     </div>

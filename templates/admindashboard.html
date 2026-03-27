@@ -19,8 +19,6 @@
         background: #f4f6f9;
       }
 
-      /* Sidebar */
-
       .sidebar {
         width: 230px;
         background: #2f3542;
@@ -46,8 +44,6 @@
       .sidebar a:hover {
         background: #57606f;
       }
-
-      /* Main Content */
 
       .main {
         flex: 1;
@@ -84,8 +80,6 @@
   </head>
 
   <body>
-    <!-- Sidebar -->
-
     <div class="sidebar">
       <h2>Admin</h2>
 
@@ -96,15 +90,16 @@
       <a href="#">Inventory</a>
       <a href="#">Reports</a>
       <a href="#">Settings</a>
-      <a href="{{ url_for('login') }}">Logout</a>
+      <a href="{{ url_for('userdashboard_section', section='pricing') }}"
+        >Open User Modules</a
+      >
+      <a href="{{ url_for('logout') }}">Logout</a>
     </div>
-
-    <!-- Main Content -->
 
     <div class="main">
       <div class="header">
         <h1>Admin Dashboard</h1>
-        <p>Welcome, Administrator</p>
+        <p>Welcome, {{ username }}</p>
       </div>
 
       <div class="cards">
