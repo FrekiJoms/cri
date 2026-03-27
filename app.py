@@ -7,35 +7,6 @@ users = {
     'pangit@bisu.edu.ph' : ['user123','user']
 }
 
-products = [
-    {
-        'id': 10,
-        'name': 'Product 10',
-        'base_price': 120.00,
-        'price_history': [
-            {
-                'old_price': None,
-                'new_price': 120.00,
-                'updated_by': 'System',
-                'timestamp': '2026-03-27 09:00'
-            }
-        ]
-    },
-    {
-        'id': 11,
-        'name': 'Product 11',
-        'base_price': 245.50,
-        'price_history': [
-            {
-                'old_price': None,
-                'new_price': 245.50,
-                'updated_by': 'System',
-                'timestamp': '2026-03-27 09:00'
-            }
-        ]
-    }
-]
-
 @app.route('/')
 def home():
     return 'KINSA KA OOOIIIEEEEE'
@@ -54,8 +25,7 @@ def userdashboard_section(section):
         return render_template(
             'pricingdashboard.html',
             username='User',
-            role='user',
-            products=products
+            role='user'
         )
     elif section == 'discount':
         return render_template(
@@ -70,32 +40,6 @@ def userdashboard_section(section):
             role='user'
         )
     return render_template('userdashboard.html', username='User', role='user')
-
-@app.route('/userdashboard/pricing/update', methods=['POST'])
-def update_pricing():
-    product_id = request.form['product_id']
-    price = request.form['price']
-
-    for product in products:
-        if str(product['id']) == product_id:
-            old_price = product['base_price']
-            product['base_price'] = float(price)
-            product['price_history'].append(
-                {
-                    'old_price': old_price,
-                    'new_price': float(price),
-                    'updated_by': 'User',
-                    'timestamp': 'Updated'
-                }
-            )
-            break
-
-    return render_template(
-        'pricingdashboard.html',
-        username='User',
-        role='user',
-        products=products
-    )
 
 @app.route('/logout')
 def logout():
