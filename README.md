@@ -1,4 +1,4 @@
-<img width="960" height="474" alt="image" src="https://github.com/user-attachments/assets/cb84d1e4-43d0-4934-86bf-7b22d070c660" /># CODE NI ZAFRAAAAAAAAHHH!!!
+# CODE NI ZAFRAAAAAAAAHHH!!!
 - gi tabangan ni jomsss
 
 ## PREVIEW
